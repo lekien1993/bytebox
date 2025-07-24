@@ -5,18 +5,38 @@
   <title>BYTEBOX GAMING</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
+      background: url('https://file.hstatic.net/200000420363/file/f_20230516183413fvm0jw_09166dc43c7e432db8853cadbfccbfae_grande.png') no-repeat center center fixed;
+      background-size: cover;
       font-family: 'Arial', sans-serif;
-      background-color: #0f0f0f;
       color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 40px;
+      border-radius: 20px;
       text-align: center;
-      padding-top: 80px;
+      box-shadow: 0 0 30px #00ffc3;
     }
 
     h1 {
       font-size: 48px;
       color: #00ffc3;
       text-shadow: 0 0 10px #00ffc3, 0 0 20px #0ff;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-top: 10px;
       margin-bottom: 30px;
+      font-size: 22px;
+      color: #fff;
     }
 
     input, button {
@@ -59,46 +79,14 @@
   </style>
 </head>
 <body>
-  <h1>BYTEBOX GAMING</h1>
-  <h2>🎁 Nhập mã để nhận phần quà 🎁</h2>
+  <div class="container">
+    <h1>BYTEBOX GAMING</h1>
+    <h2>🎁 Nhập mã để nhận phần quà 🎁</h2>
 
-  <input type="text" id="code" placeholder="Nhập mã..." />
-  <button onclick="checkCode()">Xác nhận</button>
+    <input type="text" id="code" placeholder="Nhập mã..." />
+    <button onclick="checkCode()">Xác nhận</button>
 
-  <div id="result">🎮</div>
+    <div id="result">🎮</div>
 
-  <div class="animation" id="dancer">
-    <img src="https://media.tenor.com/Ix31xpBr9G8AAAAC/anime-girl-dancing.gif" alt="Sexy Girl Dancing">
-  </div>
-
-  <audio id="clap-sound">
-    <source src="https://www.fesliyanstudios.com/play-mp3/387" type="audio/mpeg">
-  </audio>
-
-  <script>
-    const codes = {
-      "ABC123": "🧸 Gấu bông",
-      "XYZ789": "🎟️ 1 voucher 100k",
-      "QWE456": "🥤 1 ly giữ nhiệt"
-    };
-
-    function checkCode() {
-      const input = document.getElementById("code").value.trim().toUpperCase();
-      const result = document.getElementById("result");
-      const dancer = document.getElementById("dancer");
-      const clap = document.getElementById("clap-sound");
-
-      if (codes[input]) {
-        result.textContent = "🎉 Bạn nhận được: " + codes[input];
-        result.style.color = "#00ff7f";
-        dancer.style.display = "block";
-        clap.play();
-      } else {
-        result.textContent = "❌ Mã không hợp lệ!";
-        result.style.color = "red";
-        dancer.style.display = "none";
-      }
-    }
-  </script>
-</body>
-</html>
+    <div class="animation" id="dancer">
+      <img src="https://media.tenor
