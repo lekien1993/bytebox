@@ -1,92 +1,154 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <title>BYTEBOX GAMING</title>
+  <meta charset="UTF-8">
+  <title>Nhận Thẻ Game</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      background: url('https://file.hstatic.net/200000420363/file/f_20230516183413fvm0jw_09166dc43c7e432db8853cadbfccbfae_grande.png') no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Arial', sans-serif;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-
-    .container {
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 40px;
-      border-radius: 20px;
+      font-family: Arial, sans-serif;
       text-align: center;
-      box-shadow: 0 0 30px #00ffc3;
+      margin-top: 80px;
     }
-
-    h1 {
-      font-size: 48px;
-      color: #00ffc3;
-      text-shadow: 0 0 10px #00ffc3, 0 0 20px #0ff;
-      margin-bottom: 20px;
-    }
-
-    h2 {
-      margin-top: 10px;
-      margin-bottom: 30px;
-      font-size: 22px;
-      color: #fff;
-    }
-
-    input, button {
+    select, input, button {
       font-size: 18px;
-      padding: 10px 15px;
+      padding: 10px;
       margin: 10px;
-      border: none;
-      border-radius: 5px;
     }
-
-    input {
-      width: 250px;
-    }
-
-    button {
-      background-color: #00ffc3;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
     #result {
       margin-top: 30px;
-      font-size: 24px;
-      color: #00ff7f;
-      text-shadow: 0 0 5px #0f0;
+      font-size: 20px;
+      font-weight: bold;
     }
-
-    .animation {
-      margin-top: 30px;
-      display: none;
-    }
-
-    .animation img {
-      width: 250px;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 0 15px #ff69b4;
+    .card-info {
+      margin-top: 15px;
+      font-size: 18px;
+      color: green;
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>BYTEBOX GAMING</h1>
-    <h2>🎁 Nhập mã để nhận phần quà 🎁</h2>
 
-    <input type="text" id="code" placeholder="Nhập mã..." />
-    <button onclick="checkCode()">Xác nhận</button>
+  <h1>🎁 Nhận Quà - Thẻ Game</h1>
+  <p>Chọn loại thẻ bạn muốn và nhập mã nhận thưởng</p>
 
-    <div id="result">🎮</div>
+  <select id="cardType">
+    <option value="">-- Chọn loại thẻ --</option>
+    <option value="Zing">Thẻ Zing</option>
+    <option value="Garena">Thẻ Garena</option>
+  </select><br>
 
-    <div class="animation" id="dancer">
-      <img src="https://media.tenor
+  <input type="text" id="codeInput" placeholder="Nhập mã code..." /><br>
+
+  <button onclick="checkCode()">Nhận Thẻ</button>
+
+  <div id="result"></div>
+
+  <script>
+    // Danh sách 10 mã test (5 Zing, 5 Garena, có 2 mã cả 2 loại)
+    const codes = {
+      "ZING001": {
+        Zing: {
+          pin: "ZING-1000-0001-0001",
+          serial: "Z-SERIAL-0001"
+        }
+      },
+      "ZING002": {
+        Zing: {
+          pin: "ZING-1000-0002-0002",
+          serial: "Z-SERIAL-0002"
+        }
+      },
+      "ZING003": {
+        Zing: {
+          pin: "ZING-1000-0003-0003",
+          serial: "Z-SERIAL-0003"
+        }
+      },
+      "ZING004": {
+        Zing: {
+          pin: "ZING-1000-0004-0004",
+          serial: "Z-SERIAL-0004"
+        }
+      },
+      "ZING005": {
+        Zing: {
+          pin: "ZING-1000-0005-0005",
+          serial: "Z-SERIAL-0005"
+        }
+      },
+      "GARENA001": {
+        Garena: {
+          pin: "GARENA-2000-0001-1111",
+          serial: "G-SERIAL-0001"
+        }
+      },
+      "GARENA002": {
+        Garena: {
+          pin: "GARENA-2000-0002-2222",
+          serial: "G-SERIAL-0002"
+        }
+      },
+      "GARENA003": {
+        Garena: {
+          pin: "GARENA-2000-0003-3333",
+          serial: "G-SERIAL-0003"
+        }
+      },
+      "GARENA004": {
+        Garena: {
+          pin: "GARENA-2000-0004-4444",
+          serial: "G-SERIAL-0004"
+        }
+      },
+      "COMBO001": {
+        Zing: {
+          pin: "ZING-9999-0000-1111",
+          serial: "Z-SERIAL-9999"
+        },
+        Garena: {
+          pin: "GARENA-8888-0000-2222",
+          serial: "G-SERIAL-8888"
+        }
+      }
+    };
+
+    function checkCode() {
+      const selectedType = document.getElementById("cardType").value;
+      const inputCode = document.getElementById("codeInput").value.trim().toUpperCase();
+      const result = document.getElementById("result");
+
+      if (!selectedType || !inputCode) {
+        result.style.color = "red";
+        result.innerHTML = "⚠️ Vui lòng chọn loại thẻ và nhập mã.";
+        return;
+      }
+
+      const entry = codes[inputCode];
+      if (!entry) {
+        result.style.color = "red";
+        result.innerHTML = "❌ Mã không hợp lệ hoặc đã được sử dụng.";
+        return;
+      }
+
+      const card = entry[selectedType];
+      if (card) {
+        result.style.color = "green";
+        result.innerHTML = `
+          ✅ Thông tin thẻ ${selectedType} của bạn:<br>
+          <div class="card-info">
+            <strong>Mã nạp:</strong> ${card.pin}<br>
+            <strong>Số serial:</strong> ${card.serial}
+          </div>
+        `;
+        // Xoá mã sau khi dùng (tránh nhập lại)
+        delete codes[inputCode];
+      } else {
+        result.style.color = "red";
+        result.innerHTML = `❌ Mã này không có thẻ loại ${selectedType}.`;
+      }
+    }
+  </script>
+
+</body>
+</html>
