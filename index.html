@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Nhận quà</title>
+  <style>
+    body { font-family: Arial; text-align: center; padding-top: 100px; }
+    input, button { font-size: 18px; padding: 8px; margin: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Nhập mã để nhận phần quà</h1>
+  <input type="text" id="code" placeholder="Nhập mã..." />
+  <button onclick="checkCode()">Xác nhận</button>
+  <div id="result" style="margin-top:20px; font-size: 20px; color: green;"></div>
+
+  <script>
+    const codes = {
+      "ABC123": "🎁 Gấu bông",
+      "XYZ789": "🎁 Voucher 100k",
+      "QWE456": "🎁 Ly giữ nhiệt"
+    };
+
+    function checkCode() {
+      const input = document.getElementById("code").value.trim().toUpperCase();
+      const result = document.getElementById("result");
+
+      if (codes[input]) {
+        result.textContent = "Bạn nhận được: " + codes[input];
+      } else {
+        result.textContent = "❌ Mã không hợp lệ.";
+        result.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>
