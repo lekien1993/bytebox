@@ -1,154 +1,178 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>Nhận Thẻ Game</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nhận Quà Thẻ Game</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://i.pinimg.com/736x/cb/7c/66/cb7c6642974fd5d354fed5600730bb2c.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: -1;
+    }
+    .container {
+      max-width: 500px;
+      margin: 5vh auto;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    h1 {
       text-align: center;
-      margin-top: 80px;
+      color: #333;
     }
-    select, input, button {
-      font-size: 18px;
+    select, input {
+      width: 100%;
       padding: 10px;
-      margin: 10px;
+      margin: 12px 0;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
     }
-    #result {
-      margin-top: 30px;
-      font-size: 20px;
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 10px;
+      background: #e9f7ef;
+      border-left: 4px solid #2ecc71;
+      border-radius: 8px;
+    }
+    .field-group {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+    }
+    .field-group input {
+      flex: 1;
       font-weight: bold;
+      color: #333;
     }
-    .card-info {
-      margin-top: 15px;
-      font-size: 18px;
-      color: green;
-      line-height: 1.6;
+    .field-group button {
+      margin-left: 10px;
+      padding: 8px 12px;
+      background: #28a745;
+      border-radius: 6px;
+      border: none;
+    }
+    .error {
+      margin-top: 20px;
+      color: red;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-
-  <h1>🎁 Nhận Quà - Thẻ Game</h1>
-  <p>Chọn loại thẻ bạn muốn và nhập mã nhận thưởng</p>
-
-  <select id="cardType">
-    <option value="">-- Chọn loại thẻ --</option>
-    <option value="Zing">Thẻ Zing</option>
-    <option value="Garena">Thẻ Garena</option>
-  </select><br>
-
-  <input type="text" id="codeInput" placeholder="Nhập mã code..." /><br>
-
-  <button onclick="checkCode()">Nhận Thẻ</button>
-
-  <div id="result"></div>
+  <div class="container">
+    <h1>🎁 Nhận Quà Thẻ Game</h1>
+    <select id="type">
+      <option value="Zing">Thẻ Zing</option>
+      <option value="Garena">Thẻ Garena</option>
+    </select>
+    <input type="text" id="code" placeholder="Nhập mã code nhận quà"/>
+    <button onclick="redeem()">Nhận Quà</button>
+    <div id="result" class="result" style="display:none;">
+      <p><strong>🎉 Bạn đã nhận được thẻ <span id="cardType"></span>!</strong></p>
+      <div class="field-group">
+        <input type="text" id="pin" readonly />
+        <button onclick="copy('pin')">📋 Sao chép</button>
+      </div>
+      <div class="field-group">
+        <input type="text" id="serial" readonly />
+        <button onclick="copy('serial')">📋 Sao chép</button>
+      </div>
+    </div>
+    <div id="error" class="error"></div>
+  </div>
 
   <script>
-    // Danh sách 10 mã test (5 Zing, 5 Garena, có 2 mã cả 2 loại)
     const codes = {
-      "ZING001": {
+      ZING001: {
+        type: 'Zing',
+        pin: 'ZING-1000-0001-0001',
+        serial: 'Z-SERIAL-0001'
+      },
+      GARENA002: {
+        type: 'Garena',
+        pin: 'GARENA-2000-0002-2222',
+        serial: 'G-SERIAL-0002'
+      },
+      COMBO001: {
+        type: 'Combo',
         Zing: {
-          pin: "ZING-1000-0001-0001",
-          serial: "Z-SERIAL-0001"
-        }
-      },
-      "ZING002": {
-        Zing: {
-          pin: "ZING-1000-0002-0002",
-          serial: "Z-SERIAL-0002"
-        }
-      },
-      "ZING003": {
-        Zing: {
-          pin: "ZING-1000-0003-0003",
-          serial: "Z-SERIAL-0003"
-        }
-      },
-      "ZING004": {
-        Zing: {
-          pin: "ZING-1000-0004-0004",
-          serial: "Z-SERIAL-0004"
-        }
-      },
-      "ZING005": {
-        Zing: {
-          pin: "ZING-1000-0005-0005",
-          serial: "Z-SERIAL-0005"
-        }
-      },
-      "GARENA001": {
-        Garena: {
-          pin: "GARENA-2000-0001-1111",
-          serial: "G-SERIAL-0001"
-        }
-      },
-      "GARENA002": {
-        Garena: {
-          pin: "GARENA-2000-0002-2222",
-          serial: "G-SERIAL-0002"
-        }
-      },
-      "GARENA003": {
-        Garena: {
-          pin: "GARENA-2000-0003-3333",
-          serial: "G-SERIAL-0003"
-        }
-      },
-      "GARENA004": {
-        Garena: {
-          pin: "GARENA-2000-0004-4444",
-          serial: "G-SERIAL-0004"
-        }
-      },
-      "COMBO001": {
-        Zing: {
-          pin: "ZING-9999-0000-1111",
-          serial: "Z-SERIAL-9999"
+          pin: 'ZING-9999-0000-1111',
+          serial: 'Z-SERIAL-9999'
         },
         Garena: {
-          pin: "GARENA-8888-0000-2222",
-          serial: "G-SERIAL-8888"
+          pin: 'GARENA-8888-0000-2222',
+          serial: 'G-SERIAL-8888'
         }
       }
     };
 
-    function checkCode() {
-      const selectedType = document.getElementById("cardType").value;
-      const inputCode = document.getElementById("codeInput").value.trim().toUpperCase();
-      const result = document.getElementById("result");
+    function redeem() {
+      const type = document.getElementById("type").value;
+      const code = document.getElementById("code").value.trim().toUpperCase();
+      const res = document.getElementById("result");
+      const err = document.getElementById("error");
 
-      if (!selectedType || !inputCode) {
-        result.style.color = "red";
-        result.innerHTML = "⚠️ Vui lòng chọn loại thẻ và nhập mã.";
+      res.style.display = "none";
+      err.innerText = "";
+
+      if (!codes[code]) {
+        err.innerText = "❌ Mã không hợp lệ.";
         return;
       }
 
-      const entry = codes[inputCode];
-      if (!entry) {
-        result.style.color = "red";
-        result.innerHTML = "❌ Mã không hợp lệ hoặc đã được sử dụng.";
-        return;
-      }
+      const data = codes[code];
 
-      const card = entry[selectedType];
-      if (card) {
-        result.style.color = "green";
-        result.innerHTML = `
-          ✅ Thông tin thẻ ${selectedType} của bạn:<br>
-          <div class="card-info">
-            <strong>Mã nạp:</strong> ${card.pin}<br>
-            <strong>Số serial:</strong> ${card.serial}
-          </div>
-        `;
-        // Xoá mã sau khi dùng (tránh nhập lại)
-        delete codes[inputCode];
+      if (data.type === "Combo") {
+        if (!data[type]) {
+          err.innerText = `❌ Mã này không hỗ trợ thẻ ${type}`;
+          return;
+        }
+        document.getElementById("pin").value = data[type].pin;
+        document.getElementById("serial").value = data[type].serial;
+      } else if (data.type === type) {
+        document.getElementById("pin").value = data.pin;
+        document.getElementById("serial").value = data.serial;
       } else {
-        result.style.color = "red";
-        result.innerHTML = `❌ Mã này không có thẻ loại ${selectedType}.`;
+        err.innerText = `❌ Mã này không thuộc loại thẻ ${type}`;
+        return;
       }
+
+      document.getElementById("cardType").innerText = type;
+      res.style.display = "block";
+    }
+
+    function copy(id) {
+      const input = document.getElementById(id);
+      input.select();
+      input.setSelectionRange(0, 99999); 
+      document.execCommand("copy");
+      alert("Đã sao chép: " + input.value);
     }
   </script>
-
 </body>
 </html>
