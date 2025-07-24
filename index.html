@@ -1,94 +1,102 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>Tra mã nhận quà</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <title>BYTEBOX GAMING</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(to right, #74ebd5, #ACB6E5);
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .container {
-      background: white;
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      font-family: 'Arial', sans-serif;
+      background-color: #0f0f0f;
+      color: #fff;
       text-align: center;
-      max-width: 400px;
-      width: 90%;
+      padding-top: 80px;
     }
 
     h1 {
-      margin-bottom: 20px;
-      color: #333;
+      font-size: 48px;
+      color: #00ffc3;
+      text-shadow: 0 0 10px #00ffc3, 0 0 20px #0ff;
+      margin-bottom: 30px;
+    }
+
+    input, button {
+      font-size: 18px;
+      padding: 10px 15px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
     }
 
     input {
-      padding: 12px;
-      width: 80%;
-      border: 2px solid #ccc;
-      border-radius: 10px;
-      font-size: 16px;
-      outline: none;
-      margin-bottom: 20px;
+      width: 250px;
     }
 
     button {
-      background: #4CAF50;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
+      background-color: #00ffc3;
+      color: #000;
+      font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    button:hover {
-      background: #45a049;
     }
 
     #result {
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: 600;
+      margin-top: 30px;
+      font-size: 24px;
+      color: #00ff7f;
+      text-shadow: 0 0 5px #0f0;
+    }
+
+    .animation {
+      margin-top: 30px;
+      display: none;
+    }
+
+    .animation img {
+      width: 250px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #ff69b4;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Nhập mã để nhận phần quà 🎁</h1>
-    <input type="text" id="code" placeholder="Nhập mã..." />
-    <br>
-    <button onclick="checkCode()">Xác nhận</button>
-    <div id="result"></div>
+  <h1>BYTEBOX GAMING</h1>
+  <h2>🎁 Nhập mã để nhận phần quà 🎁</h2>
+
+  <input type="text" id="code" placeholder="Nhập mã..." />
+  <button onclick="checkCode()">Xác nhận</button>
+
+  <div id="result">🎮</div>
+
+  <div class="animation" id="dancer">
+    <img src="https://media.tenor.com/Ix31xpBr9G8AAAAC/anime-girl-dancing.gif" alt="Sexy Girl Dancing">
   </div>
+
+  <audio id="clap-sound">
+    <source src="https://www.fesliyanstudios.com/play-mp3/387" type="audio/mpeg">
+  </audio>
 
   <script>
     const codes = {
-      "ABC123": "🎁 Gấu bông",
-      "XYZ789": "🎁 Voucher 100k",
-      "QWE456": "🎁 Ly giữ nhiệt"
+      "ABC123": "🧸 Gấu bông",
+      "XYZ789": "🎟️ 1 voucher 100k",
+      "QWE456": "🥤 1 ly giữ nhiệt"
     };
 
     function checkCode() {
       const input = document.getElementById("code").value.trim().toUpperCase();
       const result = document.getElementById("result");
+      const dancer = document.getElementById("dancer");
+      const clap = document.getElementById("clap-sound");
 
       if (codes[input]) {
-        result.style.color = "green";
-        result.textContent = "Bạn nhận được: " + codes[input];
+        result.textContent = "🎉 Bạn nhận được: " + codes[input];
+        result.style.color = "#00ff7f";
+        dancer.style.display = "block";
+        clap.play();
       } else {
+        result.textContent = "❌ Mã không hợp lệ!";
         result.style.color = "red";
-        result.textContent = "❌ Mã không hợp lệ.";
+        dancer.style.display = "none";
       }
     }
   </script>
