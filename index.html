@@ -2,222 +2,193 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nhận Quà Thẻ Game</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@600&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Bai Jamjuree', sans-serif;
+    }
+
     body {
       margin: 0;
-      font-family: 'Bai Jamjuree', sans-serif;
-      background: url('https://i.pinimg.com/736x/cb/7c/66/cb7c6642974fd5d354fed5600730bb2c.jpg') no-repeat center center fixed;
-      background-size: cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: 0;
+      background: url('https://i.imgur.com/oUeZt9J.png') center/cover no-repeat;
       height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       color: white;
-      padding: 10px;
     }
 
     .container {
-      background: rgba(0, 0, 0, 0.55);
-      padding: 40px;
+      width: 90%;
+      max-width: 500px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid #00f0ff;
       border-radius: 20px;
-      border: 2px solid #00f7ff;
-      box-shadow: 0 0 25px #00f7ff;
-      animation: pulseNeon 2s infinite, fadeZoom 0.5s ease-in-out;
+      padding: 30px 20px;
       text-align: center;
-      width: 600px;
-      max-width: 100%;
-    }
-
-    @keyframes pulseNeon {
-      0% { box-shadow: 0 0 15px #00f7ff; }
-      50% { box-shadow: 0 0 30px #00f7ff; }
-      100% { box-shadow: 0 0 15px #00f7ff; }
+      box-shadow: 0 0 15px #00f0ff;
+      animation: fadeZoom 0.6s ease-out;
     }
 
     @keyframes fadeZoom {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+      0% {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
-    h1 {
-      font-size: 34px;
-      font-weight: 700;
-      margin-bottom: 25px;
-      color: #00fff7;
+    h2 {
+      font-size: 1.8em;
+      color: #00f0ff;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00f0ff;
     }
 
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-    }
-
-    select, input[type="text"] {
+    select, input {
       width: 100%;
-      max-width: 400px;
       padding: 12px;
+      margin: 10px 0;
       border-radius: 8px;
       border: none;
-      font-size: 16px;
-    }
-
-    .button-wrapper {
-      width: 100%;
-      display: flex;
-      justify-content: center;
+      font-size: 1em;
     }
 
     button {
+      margin-top: 15px;
+      padding: 12px 24px;
+      font-size: 1em;
+      border: none;
       background-color: #00bfff;
       color: white;
-      border: none;
-      padding: 12px 20px;
-      font-size: 16px;
       border-radius: 8px;
       cursor: pointer;
-      transition: 0.3s;
       width: 33%;
-      max-width: 133px;
-      min-width: 100px;
+      animation: pulse 2s infinite;
     }
 
-    button:hover {
-      background-color: #008ecc;
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(0, 255, 255, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 255, 255, 0); }
     }
 
-    .result-container {
+    #result {
       margin-top: 20px;
-    }
-
-    .result-input {
-      background-color: rgba(255, 255, 255, 0.1);
+      font-size: 1em;
       color: white;
-      border: 1px solid #00fff7;
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      font-size: 15px;
-      text-align: left;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .error {
-      color: white;
-      margin-top: 10px;
     }
 
     .thankyou {
       margin-top: 20px;
-      font-size: 18px;
-      font-weight: 600;
-      color: #00ffea;
+      font-size: 1.1em;
+      color: #00f0ff;
+      font-weight: bold;
     }
 
-    /* --- Responsive Styles --- */
-    @media screen and (max-width: 600px) {
+    @media (max-width: 500px) {
       .container {
-        padding: 25px 20px;
-        width: 100%;
+        padding: 20px 10px;
       }
 
-      h1 {
-        font-size: 26px;
-      }
-
-      select, input[type="text"], .result-input {
-        max-width: 100%;
-        font-size: 15px;
-        padding: 10px;
+      h2 {
+        font-size: 1.5em;
       }
 
       button {
-        width: 50%;
-        font-size: 15px;
-        padding: 10px;
-      }
-
-      .thankyou {
-        font-size: 16px;
+        width: 100%;
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Nhận Quà Thẻ Game</h1>
+    <h2>Nhận Quà Thẻ Game</h2>
 
-    <div class="input-group">
-      <select id="cardType">
-        <option value="zing">Thẻ Zing</option>
-        <option value="garena">Thẻ Garena</option>
-      </select>
+    <select id="cardType">
+      <option value="ZING">Thẻ Zing</option>
+      <option value="GARENA">Thẻ Garena</option>
+    </select>
 
-      <input type="text" id="giftCode" placeholder="Nhập mã nhận quà" />
+    <input type="text" id="giftCode" placeholder="Nhập mã quà 4 số" maxlength="4" />
 
-      <div class="button-wrapper">
-        <button onclick="redeemGift()">Nhận Quà</button>
-      </div>
+    <button onclick="handleSubmit()">Nhận Quà</button>
+
+    <div id="result"></div>
+    <div class="thankyou" id="thanks" style="display:none;">
+      Cảm ơn bạn đã đến với Bytebox Gaming
     </div>
-
-    <div id="result" class="result-container"></div>
-    <div id="error" class="error"></div>
-    <div id="thankyou" class="thankyou" style="display: none;">Cảm ơn bạn đã đến với Bytebox Gaming</div>
   </div>
 
   <script>
-    const giftDB = {
-      TEST001: {
-        used: false,
-        usedType: null,
-        data: {
-          zing: { serial: "8D0116173988", code: "PZ2J8R68R" },
-          garena: { serial: "GA0116173988", code: "GAR1234567" },
-        }
-      }
+    // Kho mã thẻ (tách riêng nếu cần)
+    const codeStore = {
+      "5732": { type: "ZING", used: false, serial: "9D0116173175", pin: "KX4RA362R" },
+      "4208": { type: "ZING", used: false, serial: "9D0116173179", pin: "979H7627Z" },
+      "3084": { type: "ZING", used: false, serial: "9D0116173188", pin: "KXLAPKKD9" },
+      "2657": { type: "ZING", used: false, serial: "9D0116173197", pin: "2D7ZNPM96" },
+      "1980": { type: "ZING", used: false, serial: "9D0116173239", pin: "JWN9LP22A" },
+      "6041": { type: "ZING", used: false, serial: "9D0116173249", pin: "7X42X9ZDY" },
+      "7319": { type: "ZING", used: false, serial: "9D0116173268", pin: "BL8J6NZ36" },
+      "4813": { type: "ZING", used: false, serial: "9D0116173279", pin: "Y866A9ZD9" },
+      "9150": { type: "ZING", used: false, serial: "9D0116173377", pin: "3X936RAJW" },
+      "1475": { type: "ZING", used: false, serial: "9D0116173379", pin: "7WK98MABK" },
+
+      "8461": { type: "GARENA", used: false, serial: "736955508", pin: "1745253382488186" },
+      "3720": { type: "GARENA", used: false, serial: "736955509", pin: "1296462602781749" },
+      "6924": { type: "GARENA", used: false, serial: "736955510", pin: "1948683828646046" },
+      "2506": { type: "GARENA", used: false, serial: "736955511", pin: "2490902941236704" },
+      "1093": { type: "GARENA", used: false, serial: "736955512", pin: "2953112365072029" }
     };
 
-    function redeemGift() {
-      const cardType = document.getElementById('cardType').value;
-      const giftCode = document.getElementById('giftCode').value.trim().toUpperCase();
-      const result = document.getElementById('result');
-      const error = document.getElementById('error');
-      const thankyou = document.getElementById('thankyou');
+    function handleSubmit() {
+      const inputCode = document.getElementById("giftCode").value.trim();
+      const inputType = document.getElementById("cardType").value;
+      const resultDiv = document.getElementById("result");
+      const thanks = document.getElementById("thanks");
 
-      result.innerHTML = '';
-      error.innerHTML = '';
-      thankyou.style.display = 'none';
-
-      if (!giftDB[giftCode]) {
-        error.innerText = '❌ Mã không hợp lệ!';
+      if (!/^\d{4}$/.test(inputCode)) {
+        resultDiv.innerHTML = "❌ Mã không hợp lệ! (phải là 4 chữ số)";
+        thanks.style.display = "none";
         return;
       }
 
-      const gift = giftDB[giftCode];
+      const record = codeStore[inputCode];
 
-      if (gift.used && gift.usedType === cardType) {
-        error.innerText = '❌ Mã này đã được sử dụng cho loại thẻ này!';
-        return;
-      } else if (gift.used && gift.usedType !== cardType) {
-        error.innerText = '❌ Mã này đã được sử dụng cho loại thẻ khác!';
+      if (!record) {
+        resultDiv.innerHTML = "❌ Mã không tồn tại!";
+        thanks.style.display = "none";
         return;
       }
 
-      const card = gift.data[cardType];
-      gift.used = true;
-      gift.usedType = cardType;
+      if (record.used) {
+        resultDiv.innerHTML = `⚠️ Mã này đã được sử dụng cho thẻ ${record.type}`;
+        thanks.style.display = "none";
+        return;
+      }
 
-      result.innerHTML = `
-        <div class="result-input"><strong>📌 Serial:</strong> ${card.serial}</div>
-        <div class="result-input"><strong>💳 Mã thẻ:</strong> ${card.code}</div>
+      if (record.type !== inputType) {
+        resultDiv.innerHTML = `⚠️ Mã này chỉ dùng cho thẻ ${record.type}`;
+        thanks.style.display = "none";
+        return;
+      }
+
+      // Đánh dấu đã dùng
+      record.used = true;
+
+      resultDiv.innerHTML = `
+        🎉 Bạn đã nhận được thẻ ${record.type}!<br/>
+        🔑 <b>Serial:</b> ${record.serial}<br/>
+        💳 <b>Mã thẻ:</b> ${record.pin}
       `;
-
-      thankyou.style.display = 'block';
+      thanks.style.display = "block";
     }
   </script>
 </body>
