@@ -2,190 +2,162 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nhận Quà Thẻ Game</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
       font-family: 'Bai Jamjuree', sans-serif;
-      height: 100%;
       background: url('https://i.pinimg.com/736x/cb/7c/66/cb7c6642974fd5d354fed5600730bb2c.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: white;
       display: flex;
       align-items: center;
       justify-content: center;
+      height: 100vh;
+      color: white;
     }
 
     .container {
-      width: 420px;
-      max-width: 90%;
-      padding: 35px 30px;
+      background: rgba(0, 0, 0, 0.55);
+      padding: 40px;
       border-radius: 20px;
-      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid #00f7ff;
+      box-shadow: 0 0 25px #00f7ff;
+      animation: pulseNeon 2s infinite;
       text-align: center;
-      border: 2px solid #00ffff;
-      box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
-      animation: fadeZoomIn 0.6s ease, pulseGlow 2s infinite;
+      width: 420px;
+      animation: fadeZoom 0.6s ease-in-out;
     }
 
-    @keyframes fadeZoomIn {
-      0% {
-        opacity: 0;
-        transform: scale(0.9);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
+    @keyframes pulseNeon {
+      0% { box-shadow: 0 0 15px #00f7ff; }
+      50% { box-shadow: 0 0 30px #00f7ff; }
+      100% { box-shadow: 0 0 15px #00f7ff; }
     }
 
-    @keyframes pulseGlow {
-      0% {
-        box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
-      }
-      50% {
-        box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
-      }
-      100% {
-        box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
-      }
+    @keyframes fadeZoom {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
 
     h1 {
-      font-size: 2.2rem;
-      margin-bottom: 25px;
+      font-size: 28px;
       font-weight: 700;
-      color: #ffffff;
-      text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+      margin-bottom: 25px;
     }
 
-    select, input {
+    select, input[type="text"] {
       width: 100%;
       padding: 12px;
-      margin: 10px 0;
-      border-radius: 12px;
+      margin-bottom: 15px;
+      border-radius: 8px;
       border: none;
-      font-size: 1rem;
+      font-size: 16px;
     }
 
     button {
-      width: 100%;
-      padding: 12px;
-      font-weight: bold;
-      border: none;
-      border-radius: 12px;
-      background-color: #00aaff;
+      background-color: #007bff;
       color: white;
-      font-size: 1rem;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: 0.3s;
+      width: 100%;
     }
 
     button:hover {
-      background-color: #0077cc;
+      background-color: #0056b3;
     }
 
     .result {
       margin-top: 20px;
-      display: none;
-      animation: fadeZoomIn 0.3s ease;
+      font-size: 16px;
     }
 
-    .result input {
-      margin: 5px 0;
-      background-color: #111;
-      color: lime;
-      text-align: center;
-      font-weight: bold;
-      border-radius: 10px;
-    }
-
-    #error {
+    .error {
       color: white;
       margin-top: 10px;
-      font-size: 0.9rem;
+    }
+
+    .thankyou {
+      margin-top: 30px;
+      font-size: 16px;
+      font-style: italic;
+      color: #00ffea;
     }
   </style>
 </head>
 <body>
-
   <div class="container">
-    <h1>🎮 Nhận Quà Thẻ Game</h1>
-    <select id="type">
-      <option value="Zing">Thẻ Zing</option>
-      <option value="Garena">Thẻ Garena</option>
+    <h1>Nhận Quà Thẻ Game</h1>
+
+    <select id="cardType">
+      <option value="zing">Thẻ Zing</option>
+      <option value="garena">Thẻ Garena</option>
     </select>
-    <input id="code" placeholder="Nhập mã nhận quà"/>
-    <button onclick="redeem()">Nhận Quà</button>
 
-    <div id="result" class="result">
-      <p>🎁 Bạn nhận được thẻ <span id="cardType"></span>!</p>
-      <label>Mã thẻ:</label>
-      <input id="pin" readonly />
-      <label>Số serial:</label>
-      <input id="serial" readonly />
-    </div>
+    <input type="text" id="giftCode" placeholder="Nhập mã nhận quà" />
 
-    <div id="error"></div>
+    <button onclick="redeemGift()">Nhận Quà</button>
+
+    <div id="result" class="result"></div>
+    <div id="error" class="error"></div>
+    <div id="thankyou" class="thankyou" style="display: none;">Cảm ơn bạn đã đến với Bytebox Gaming</div>
   </div>
 
   <script>
-    const codes = {
+    const giftDB = {
       TEST001: {
-        Zing: {
-          pin: 'PZ2J8R68R',
-          serial: '8D0116173988'
-        },
-        Garena: {
-          pin: 'GAR1234567',
-          serial: 'GA0116173988'
+        used: false,
+        usedType: null,
+        data: {
+          zing: { serial: "8D0116173988", code: "PZ2J8R68R" },
+          garena: { serial: "GA0116173988", code: "GAR1234567" },
         }
       }
     };
 
-    const usedCodes = new Set();
+    function redeemGift() {
+      const cardType = document.getElementById('cardType').value;
+      const giftCode = document.getElementById('giftCode').value.trim().toUpperCase();
+      const result = document.getElementById('result');
+      const error = document.getElementById('error');
+      const thankyou = document.getElementById('thankyou');
 
-    function redeem() {
-      const type = document.getElementById("type").value;
-      const code = document.getElementById("code").value.trim().toUpperCase();
-      const res = document.getElementById("result");
-      const err = document.getElementById("error");
+      result.innerHTML = '';
+      error.innerHTML = '';
+      thankyou.style.display = 'none';
 
-      res.style.display = "none";
-      err.innerText = "";
-
-      if (!codes[code]) {
-        err.innerText = "❌ Mã không tồn tại.";
+      if (!giftDB[giftCode]) {
+        error.innerText = '❌ Mã không hợp lệ!';
         return;
       }
 
-      if (usedCodes.has(code)) {
-        err.innerText = "⚠️ Mã này đã được sử dụng.";
+      const gift = giftDB[giftCode];
+
+      if (gift.used && gift.usedType === cardType) {
+        error.innerText = '❌ Mã này đã được sử dụng cho loại thẻ này!';
+        return;
+      } else if (gift.used && gift.usedType !== cardType) {
+        error.innerText = '❌ Mã này đã được sử dụng cho loại thẻ khác!';
         return;
       }
 
-      const cardData = codes[code][type];
-      if (!cardData) {
-        err.innerText = `❌ Mã này không hỗ trợ thẻ ${type}`;
-        return;
-      }
+      const card = gift.data[cardType];
+      gift.used = true;
+      gift.usedType = cardType;
 
-      document.getElementById("pin").value = cardData.pin;
-      document.getElementById("serial").value = cardData.serial;
-      document.getElementById("cardType").innerText = type;
-      res.style.display = "block";
+      result.innerHTML = `
+        🎉 <strong>Bạn đã nhận được thẻ ${cardType === 'zing' ? 'Zing' : 'Garena'}!</strong><br>
+        <br>📌 <strong>Serial:</strong> ${card.serial}<br>
+        💳 <strong>Mã thẻ:</strong> ${card.code}
+      `;
 
-      usedCodes.add(code);
-      delete codes[code]; // ngăn dùng lại
+      thankyou.style.display = 'block';
     }
   </script>
-
 </body>
 </html>
