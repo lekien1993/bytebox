@@ -24,10 +24,9 @@
       border-radius: 20px;
       border: 2px solid #00f7ff;
       box-shadow: 0 0 25px #00f7ff;
-      animation: pulseNeon 2s infinite;
+      animation: pulseNeon 2s infinite, fadeZoom 0.5s ease-in-out;
       text-align: center;
       width: 600px;
-      animation: fadeZoom 0.5s ease-in-out;
     }
 
     @keyframes pulseNeon {
@@ -42,7 +41,7 @@
     }
 
     h1 {
-      font-size: 32px;
+      font-size: 34px;
       font-weight: 700;
       margin-bottom: 25px;
       color: #00fff7;
@@ -73,9 +72,19 @@
       background-color: #008ecc;
     }
 
-    .result {
+    .result-container {
       margin-top: 20px;
-      font-size: 16px;
+    }
+
+    .result-input {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid #00fff7;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: 15px;
+      text-align: left;
     }
 
     .error {
@@ -84,9 +93,9 @@
     }
 
     .thankyou {
-      margin-top: 30px;
-      font-size: 16px;
-      font-style: italic;
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
       color: #00ffea;
     }
   </style>
@@ -104,7 +113,7 @@
 
     <button onclick="redeemGift()">Nhận Quà</button>
 
-    <div id="result" class="result"></div>
+    <div id="result" class="result-container"></div>
     <div id="error" class="error"></div>
     <div id="thankyou" class="thankyou" style="display: none;">Cảm ơn bạn đã đến với Bytebox Gaming</div>
   </div>
@@ -152,9 +161,8 @@
       gift.usedType = cardType;
 
       result.innerHTML = `
-        🎉 <strong>Bạn đã nhận được thẻ ${cardType === 'zing' ? 'Zing' : 'Garena'}!</strong><br>
-        <br>📌 <strong>Serial:</strong> ${card.serial}<br>
-        💳 <strong>Mã thẻ:</strong> ${card.code}
+        <div class="result-input"><strong>📌 Serial:</strong> ${card.serial}</div>
+        <div class="result-input"><strong>💳 Mã thẻ:</strong> ${card.code}</div>
       `;
 
       thankyou.style.display = 'block';
