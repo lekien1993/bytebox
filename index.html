@@ -4,39 +4,53 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nhận Quà Thẻ Game</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
-      background-image: url('https://i.pinimg.com/736x/cb/7c/66/cb7c6642974fd5d354fed5600730bb2c.jpg');
+      background: url('https://i.pinimg.com/736x/cb/7c/66/cb7c6642974fd5d354fed5600730bb2c.jpg') no-repeat center center fixed;
       background-size: cover;
-      background-position: center;
       font-family: Arial, sans-serif;
       color: white;
     }
 
     .container {
-      max-width: 400px;
-      margin: 10vh auto;
-      background: rgba(0, 0, 0, 0.6);
+      max-width: 450px;
+      margin: 12vh auto;
+      background: rgba(0, 0, 0, 0.75);
       padding: 30px;
       border-radius: 20px;
       text-align: center;
-      animation: neonPulse 3s ease-in-out infinite;
+      box-shadow: 0 0 15px #00fff7;
+      border: 2px solid #00f7ff;
+      animation: neonBorder 3s infinite ease-in-out;
+    }
+
+    @keyframes neonBorder {
+      0%, 100% {
+        box-shadow: 0 0 10px #00fff7, 0 0 20px #007bff;
+      }
+      50% {
+        box-shadow: 0 0 20px #00fff7, 0 0 40px #00c3ff;
+      }
     }
 
     h1 {
       font-family: 'Press Start 2P', cursive;
-      font-size: 1.2rem;
-      margin-bottom: 20px;
+      font-size: 0.9rem;
+      margin-bottom: 25px;
+      color: #fff;
     }
 
     select, input {
       width: 100%;
       padding: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       border-radius: 10px;
       border: none;
+      font-size: 1rem;
+      text-align: center;
     }
 
     button {
@@ -47,17 +61,18 @@
       border-radius: 10px;
       background-color: #007bff;
       color: white;
+      font-size: 1rem;
       cursor: pointer;
     }
 
     .result {
       margin-top: 20px;
       display: none;
-      animation: fadeInZoom 0.5s ease-out forwards;
+      animation: fadeInZoom 0.4s ease-out forwards;
     }
 
     .result input {
-      margin: 8px 0;
+      margin: 6px 0;
       background-color: #222;
       color: lime;
       text-align: center;
@@ -80,15 +95,6 @@
         transform: scale(1);
       }
     }
-
-    @keyframes neonPulse {
-      0%, 100% {
-        box-shadow: 0 0 10px #00fff7, 0 0 20px #007bff;
-      }
-      50% {
-        box-shadow: 0 0 20px #00fff7, 0 0 40px #00c3ff;
-      }
-    }
   </style>
 </head>
 <body>
@@ -103,7 +109,7 @@
     <button onclick="redeem()">Nhận Quà</button>
 
     <div id="result" class="result">
-      <p>🎉 Bạn đã nhận được thẻ <span id="cardType"></span>!</p>
+      <p>🎉 Bạn đã nhận được thẻ <strong><span id="cardType"></span></strong>!</p>
       <label>Mã thẻ:</label>
       <input id="pin" readonly />
       <label>Số serial:</label>
@@ -115,19 +121,13 @@
 
   <script>
     const codes = {
-      TEST001: {
-        Zing: {
-          pin: 'PZ2J8R68R',
-          serial: '8D0116173988'
-        },
-        Garena: {
-          pin: 'PZ2J8R68R',
-          serial: '8D0116173988'
-        }
+      DEMO123: {
+        Zing: { pin: 'PZ2J8R68R', serial: '8D0116173988' },
+        Garena: { pin: 'GARENA9999', serial: 'GA0123456789' }
       }
     };
 
-    const usedCodes = new Set();
+    const used = new Set();
 
     function redeem() {
       const type = document.getElementById("type").value;
@@ -143,23 +143,24 @@
         return;
       }
 
-      if (usedCodes.has(code)) {
+      if (used.has(code)) {
         err.innerText = "⚠️ Mã này đã được sử dụng.";
         return;
       }
 
-      const cardData = codes[code][type];
-      if (!cardData) {
+      const card = codes[code][type];
+      if (!card) {
         err.innerText = `❌ Mã này không hỗ trợ thẻ ${type}`;
         return;
       }
 
-      document.getElementById("pin").value = cardData.pin;
-      document.getElementById("serial").value = cardData.serial;
+      document.getElementById("pin").value = card.pin;
+      document.getElementById("serial").value = card.serial;
       document.getElementById("cardType").innerText = type;
       res.style.display = "block";
 
-      usedCodes.add(code);
+      // Xoá luôn khỏi danh sách dùng lại
+      used.add(code);
       delete codes[code];
     }
   </script>
