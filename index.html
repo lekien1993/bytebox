@@ -16,6 +16,7 @@
       justify-content: center;
       height: 100vh;
       color: white;
+      padding: 10px;
     }
 
     .container {
@@ -27,6 +28,7 @@
       animation: pulseNeon 2s infinite, fadeZoom 0.5s ease-in-out;
       text-align: center;
       width: 600px;
+      max-width: 100%;
     }
 
     @keyframes pulseNeon {
@@ -47,13 +49,26 @@
       color: #00fff7;
     }
 
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
     select, input[type="text"] {
       width: 100%;
+      max-width: 400px;
       padding: 12px;
-      margin-bottom: 15px;
       border-radius: 8px;
       border: none;
       font-size: 16px;
+    }
+
+    .button-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
     }
 
     button {
@@ -65,7 +80,9 @@
       border-radius: 8px;
       cursor: pointer;
       transition: 0.3s;
-      width: 100%;
+      width: 33%;
+      max-width: 133px;
+      min-width: 100px;
     }
 
     button:hover {
@@ -85,6 +102,9 @@
       margin-bottom: 10px;
       font-size: 15px;
       text-align: left;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .error {
@@ -98,20 +118,52 @@
       font-weight: 600;
       color: #00ffea;
     }
+
+    /* --- Responsive Styles --- */
+    @media screen and (max-width: 600px) {
+      .container {
+        padding: 25px 20px;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+
+      select, input[type="text"], .result-input {
+        max-width: 100%;
+        font-size: 15px;
+        padding: 10px;
+      }
+
+      button {
+        width: 50%;
+        font-size: 15px;
+        padding: 10px;
+      }
+
+      .thankyou {
+        font-size: 16px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Nhận Quà Thẻ Game</h1>
 
-    <select id="cardType">
-      <option value="zing">Thẻ Zing</option>
-      <option value="garena">Thẻ Garena</option>
-    </select>
+    <div class="input-group">
+      <select id="cardType">
+        <option value="zing">Thẻ Zing</option>
+        <option value="garena">Thẻ Garena</option>
+      </select>
 
-    <input type="text" id="giftCode" placeholder="Nhập mã nhận quà" />
+      <input type="text" id="giftCode" placeholder="Nhập mã nhận quà" />
 
-    <button onclick="redeemGift()">Nhận Quà</button>
+      <div class="button-wrapper">
+        <button onclick="redeemGift()">Nhận Quà</button>
+      </div>
+    </div>
 
     <div id="result" class="result-container"></div>
     <div id="error" class="error"></div>
