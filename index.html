@@ -1,50 +1,168 @@
-<script>
-  const codes = {
-    TEST001: {
-      Zing: {
-        pin: 'PZ2J8R68R',
-        serial: '8D0116173988'
-      },
-      Garena: {
-        pin: 'PZ2J8R68R',
-        serial: '8D0116173988'
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nhận Quà Thẻ Game</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url('https://i.pinimg.com/736x/cb/7c/66/cb7c6642974fd5d354fed5600730bb2c.jpg');
+      background-size: cover;
+      background-position: center;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 10vh auto;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      animation: neonPulse 3s ease-in-out infinite;
+    }
+
+    h1 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      border: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 20px;
+      display: none;
+      animation: fadeInZoom 0.5s ease-out forwards;
+    }
+
+    .result input {
+      margin: 8px 0;
+      background-color: #222;
+      color: lime;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    #error {
+      color: white;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    @keyframes fadeInZoom {
+      0% {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
       }
     }
-  };
 
-  const usedCodes = new Set();
-
-  function redeem() {
-    const type = document.getElementById("type").value;
-    const code = document.getElementById("code").value.trim().toUpperCase();
-    const res = document.getElementById("result");
-    const err = document.getElementById("error");
-
-    res.style.display = "none";
-    err.innerText = "";
-
-    if (!codes[code]) {
-      err.innerText = "❌ Mã không tồn tại.";
-      return;
+    @keyframes neonPulse {
+      0%, 100% {
+        box-shadow: 0 0 10px #00fff7, 0 0 20px #007bff;
+      }
+      50% {
+        box-shadow: 0 0 20px #00fff7, 0 0 40px #00c3ff;
+      }
     }
+  </style>
+</head>
+<body>
 
-    if (usedCodes.has(code)) {
-      err.innerText = "⚠️ Mã này đã được sử dụng.";
-      return;
+  <div class="container">
+    <h1>🎮 Nhận Quà Thẻ Game</h1>
+    <select id="type">
+      <option value="Zing">Thẻ Zing</option>
+      <option value="Garena">Thẻ Garena</option>
+    </select>
+    <input id="code" placeholder="Nhập mã nhận quà"/>
+    <button onclick="redeem()">Nhận Quà</button>
+
+    <div id="result" class="result">
+      <p>🎉 Bạn đã nhận được thẻ <span id="cardType"></span>!</p>
+      <label>Mã thẻ:</label>
+      <input id="pin" readonly />
+      <label>Số serial:</label>
+      <input id="serial" readonly />
+    </div>
+
+    <div id="error"></div>
+  </div>
+
+  <script>
+    const codes = {
+      TEST001: {
+        Zing: {
+          pin: 'PZ2J8R68R',
+          serial: '8D0116173988'
+        },
+        Garena: {
+          pin: 'PZ2J8R68R',
+          serial: '8D0116173988'
+        }
+      }
+    };
+
+    const usedCodes = new Set();
+
+    function redeem() {
+      const type = document.getElementById("type").value;
+      const code = document.getElementById("code").value.trim().toUpperCase();
+      const res = document.getElementById("result");
+      const err = document.getElementById("error");
+
+      res.style.display = "none";
+      err.innerText = "";
+
+      if (!codes[code]) {
+        err.innerText = "❌ Mã không tồn tại.";
+        return;
+      }
+
+      if (usedCodes.has(code)) {
+        err.innerText = "⚠️ Mã này đã được sử dụng.";
+        return;
+      }
+
+      const cardData = codes[code][type];
+      if (!cardData) {
+        err.innerText = `❌ Mã này không hỗ trợ thẻ ${type}`;
+        return;
+      }
+
+      document.getElementById("pin").value = cardData.pin;
+      document.getElementById("serial").value = cardData.serial;
+      document.getElementById("cardType").innerText = type;
+      res.style.display = "block";
+
+      usedCodes.add(code);
+      delete codes[code];
     }
+  </script>
 
-    const cardData = codes[code][type];
-    if (!cardData) {
-      err.innerText = `❌ Mã này không hỗ trợ thẻ ${type}`;
-      return;
-    }
-
-    document.getElementById("pin").value = cardData.pin;
-    document.getElementById("serial").value = cardData.serial;
-    document.getElementById("cardType").innerText = type;
-    res.style.display = "block";
-
-    usedCodes.add(code);
-    delete codes[code];
-  }
-</script>
+</body>
+</html>
