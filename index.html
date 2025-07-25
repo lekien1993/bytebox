@@ -4,33 +4,64 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nhận Quà Thẻ Game</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Exo:wght@600&display=swap');
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
       padding: 0;
-      background-image: url('https://i.pinimg.com/736x/cb/7c/66/cb7c6642974fd5d354fed5600730bb2c.jpg');
+      font-family: 'Bai Jamjuree', sans-serif;
+      background: url('https://i.pinimg.com/736x/cb/7c/66/cb7c6642974fd5d354fed5600730bb2c.jpg') no-repeat center center fixed;
       background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      font-family: 'Exo', sans-serif;
       color: white;
     }
 
     .container {
-      width: 360px;
+      width: 400px;
+      max-width: 90%;
       margin: 12vh auto;
-      background: rgba(0, 0, 0, 0.65);
-      padding: 30px 25px;
+      padding: 35px 30px;
       border-radius: 20px;
+      background: rgba(0, 0, 0, 0.5);
       text-align: center;
-      box-shadow: 0 0 15px #00fff7, 0 0 30px #007bff;
+      border: 2px solid #00ffff;
+      box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
+      animation: fadeZoomIn 0.6s ease;
+    }
+
+    @keyframes fadeZoomIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+      }
+      50% {
+        box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+      }
+      100% {
+        box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+      }
+    }
+
+    .container {
+      animation: fadeZoomIn 0.5s ease, pulseGlow 2s infinite;
     }
 
     h1 {
-      font-size: 1.4rem;
-      margin-bottom: 20px;
+      font-size: 1.6rem;
+      margin-bottom: 25px;
     }
 
     select, input {
@@ -48,25 +79,25 @@
       font-weight: bold;
       border: none;
       border-radius: 12px;
-      background-color: #007bff;
+      background-color: #00aaff;
       color: white;
-      cursor: pointer;
       font-size: 1rem;
+      cursor: pointer;
       transition: background-color 0.3s ease;
     }
 
     button:hover {
-      background-color: #0056b3;
+      background-color: #0077cc;
     }
 
     .result {
       margin-top: 20px;
       display: none;
-      animation: fadeInZoom 0.4s ease-out forwards;
+      animation: fadeZoomIn 0.3s ease;
     }
 
     .result input {
-      margin: 8px 0;
+      margin: 5px 0;
       background-color: #111;
       color: lime;
       text-align: center;
@@ -76,19 +107,8 @@
 
     #error {
       color: white;
-      font-size: 0.9rem;
       margin-top: 10px;
-    }
-
-    @keyframes fadeInZoom {
-      0% {
-        opacity: 0;
-        transform: scale(0.95);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
+      font-size: 0.9rem;
     }
   </style>
 </head>
@@ -122,8 +142,8 @@
           serial: '8D0116173988'
         },
         Garena: {
-          pin: 'PZ2J8R68R',
-          serial: '8D0116173988'
+          pin: 'GAR1234567',
+          serial: 'GA0116173988'
         }
       }
     };
@@ -161,7 +181,7 @@
       res.style.display = "block";
 
       usedCodes.add(code);
-      delete codes[code];
+      delete codes[code]; // không thể dùng lại
     }
   </script>
 
